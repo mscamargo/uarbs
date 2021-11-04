@@ -1,29 +1,33 @@
 #!/bin/sh
 # Ubuntu's Auto Rice Boostrapping Script (UARBS)
 # by Marcos Camargo <mscamargo.dev@gmail.com>
-# inspired by <https://larbs.xyz/>
 # License: GNU GPLv3
 
-### FUNCTIONS ###
-
-LOGS_FILE=~/install.logs
+packages_file="./packages.txt"
 
 error() { printf "%s\n" "$1" >&2; exit 1; }
 
-installpkg(){ sudo apt install -y "$1" >> $LOGS_FILE ;}
+install() { clear; echo "Installing $1..."; sudo apt install -y "$1" ;}
 
-update_repos() {
-	dialog --title "UARBS Installation" --infobox "Updating repositories.." 5 70
-	sudo apt update -y >> $LOGS_FILE
-}
+update() { clear; echo "Updating repositories.."; sudo apt update -y; }
 
-sudo apt install -y dialog >> $LOGS_FILE || error "Are you sure your running this as a root user"
+# update || error "Update process failed"
 
-update_repos || error "User exited."
+# Installation loop
+while read package; do
+	install "$package"
+done < $packages_file
 
-for x in curl ca-certificates git zsh ; do
-	dialog --title "UARBS Installation" --infobox "Installing \`$x\` which is required to install and configure other programs." 5 70
-	installpkg "$x"
-done
+# Install suckless softwares
 
 clear
+# Install dwm
+# mkdir ~/src
+
+cd ~/src
+# git clone https://git.suckless.org/dwm
+cd dwm
+make
+sudo make clean install
+
+

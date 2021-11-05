@@ -3,3 +3,5 @@ xclip
 libx11-dev
 libxft-dev
 libxinerama-dev
+neovim
+git

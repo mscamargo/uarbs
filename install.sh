@@ -11,7 +11,7 @@ install() { clear; echo "Installing $1..."; sudo apt install -y "$1" ;}
 
 update() { clear; echo "Updating repositories.."; sudo apt update -y; }
 
-# update || error "Update process failed"
+update || error "Update process failed"
 
 # Installation loop
 while read package; do
@@ -22,12 +22,10 @@ done < $packages_file
 
 clear
 # Install dwm
-# mkdir ~/src
+mkdir ~/src
 
 cd ~/src
-# git clone https://git.suckless.org/dwm
+git clone https://git.suckless.org/dwm
 cd dwm
 make
 sudo make clean install
-
-

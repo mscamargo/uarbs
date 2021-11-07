@@ -26,6 +26,6 @@ sudo mkdir -p /usr/share/sddm/themes
 git clone https://github.com/RadRussianRus/sddm-slice.git /tmp/sddm-slice
 rm -rf /tmp/sddm-slice/.git
 sudo cp -r /tmp/sddm-slice /usr/share/sddm/themes/slice
-sudo echo "[Theme]\nCurrent=slice" >> /etc/sddm.conf
+sudo echo -e "[Theme]\nCurrent=slice" | sudo tee /etc/sddm.conf
 
 clear

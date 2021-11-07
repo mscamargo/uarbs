@@ -3,7 +3,7 @@
 # by Marcos Camargo <mscamargo.dev@gmail.com>
 # License: GNU GPLv3
 
-packages_file="./packages.txt"
+packages_file="https://raw.githubusercontent.com/mscamargo/uarbs/master/packages.txt"
 
 error() { printf "%s\n" "$1" >&2; exit 1; }
 
@@ -13,19 +13,19 @@ update() { clear; echo "Updating repositories.."; sudo apt update -y; }
 
 update || error "Update process failed"
 
-# Installation loop
+# Installing packages
+cp "$packages_file" /tmp/packages.txt) || wget "$packages_file" -O /tmp/packages.txt 
 while read package; do
 	install "$package"
-done < $packages_file
+done < /tmp/packages.txt
 
-# Install suckless softwares
+# Installing SDDM
+install sddm
+sudo systemctl enable sddm
+sudo mkdir -p /usr/share/sddm/themes
+git clone https://github.com/RadRussianRus/sddm-slice.git /tmp/sddm-slice
+rm -rf /tmp/sddm-slice/.git
+sudo cp -r /tmp/sddm-slice /usr/share/sddm/themes/slice
+sudo echo "[Theme]\nCurrent=slice" >> /etc/sddm.conf
 
 clear
-# Install dwm
-mkdir ~/src
-
-cd ~/src
-git clone https://git.suckless.org/dwm
-cd dwm
-make
-sudo make clean install

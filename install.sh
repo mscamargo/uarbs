@@ -14,7 +14,7 @@ update() { clear; echo "Updating repositories.."; sudo apt update -y; }
 update || error "Update process failed"
 
 # Installing packages
-cp "$packages_file" /tmp/packages.txt) || wget "$packages_file" -O /tmp/packages.txt 
+cp "$packages_file" /tmp/packages.txt || wget "$packages_file" -O /tmp/packages.txt 
 while read package; do
 	install "$package"
 done < /tmp/packages.txt

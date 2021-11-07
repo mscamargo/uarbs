@@ -5,3 +5,5 @@ libxft-dev
 libxinerama-dev
 neovim
 git
+qml-module-qtgraphicaleffects
+qml-module-qtquick-layouts

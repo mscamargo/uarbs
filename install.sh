@@ -7,6 +7,10 @@ packages_file="https://raw.githubusercontent.com/mscamargo/uarbs/master/packages
 
 error() { printf "%s\n" "$1" >&2; exit 1; }
 
+update() { clear; echo "Updating repositories.."; sudo apt update -y; }
+
+add_ppa() { clear; echo "Adding ppa $1"; sudo add-apt-repository "$1"; }
+
 install() { clear; echo "Installing $1..."; sudo apt install -y "$1" ;}
 
 install_sddm () {
@@ -18,7 +22,7 @@ install_sddm () {
     sudo echo -e "[Theme]\nCurrent=slice" | sudo tee /etc/sddm.conf
 }
 
-update() { clear; echo "Updating repositories.."; sudo apt update -y; }
+add_ppa ppa:regolith-linux/release
 
 update || error "Update process failed"
 

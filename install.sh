@@ -9,6 +9,15 @@ error() { printf "%s\n" "$1" >&2; exit 1; }
 
 install() { clear; echo "Installing $1..."; sudo apt install -y "$1" ;}
 
+install_sddm () {
+    install sddm
+    sudo systemctl enable sddm
+    sudo mkdir -p /usr/share/sddm/themes
+    git clone https://github.com/RadRussianRus/sddm-slice.git /tmp/sddm-slice
+    sudo cp -r /tmp/sddm-slice /usr/share/sddm/themes/slice
+    sudo echo -e "[Theme]\nCurrent=slice" | sudo tee /etc/sddm.conf
+}
+
 update() { clear; echo "Updating repositories.."; sudo apt update -y; }
 
 update || error "Update process failed"
@@ -19,13 +28,6 @@ while read package; do
 	install "$package"
 done < /tmp/packages.txt
 
-# Installing SDDM
-install sddm
-sudo systemctl enable sddm
-sudo mkdir -p /usr/share/sddm/themes
-git clone https://github.com/RadRussianRus/sddm-slice.git /tmp/sddm-slice
-rm -rf /tmp/sddm-slice/.git
-sudo cp -r /tmp/sddm-slice /usr/share/sddm/themes/slice
-sudo echo -e "[Theme]\nCurrent=slice" | sudo tee /etc/sddm.conf
+install_sddm
 
 clear

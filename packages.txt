@@ -7,3 +7,4 @@ neovim
 git
 qml-module-qtgraphicaleffects
 qml-module-qtquick-layouts
+i3-gaps

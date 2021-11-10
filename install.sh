@@ -5,15 +5,23 @@
 
 packages_file="https://raw.githubusercontent.com/mscamargo/uarbs/master/packages.txt"
 
-error() { printf "%s\n" "$1" >&2; exit 1; }
+error () { printf "%s\n" "$1" >&2; exit 1; }
 
-update() { clear; echo "Updating repositories..."; sudo apt update -y; }
+update () { clear; echo "Updating repositories..."; sudo apt update -y; }
 
-add_ppa() { clear; echo "Adding ppa $1..."; sudo add-apt-repository -y "$1"; }
+add_ppa () { clear; echo "Adding ppa $1..."; sudo add-apt-repository -y "$1"; }
 
-install() { clear; echo "Installing $1..."; sudo apt install -y "$1" ;}
+install () { clear; echo "Installing $1..."; sudo apt install -y "$1" ;}
+
+install_packages () {
+    cp "$packages_file" /tmp/packages.txt || wget "$packages_file" -O /tmp/packages.txt
+    while read package; do
+        install "$package"
+    done < /tmp/packages.txt
+}
 
 install_sddm () {
+    clear
     install sddm
     sudo systemctl enable sddm
     sudo mkdir -p /usr/share/sddm/themes
@@ -22,16 +30,24 @@ install_sddm () {
     sudo echo -e "[Theme]\nCurrent=slice" | sudo tee /etc/sddm.conf
 }
 
+install_dots () {
+    clear
+    echo "Installing dotfiles..."
+    mkdir -p ~/.local/src/dots
+    cd ~/.local/src/dotfiles
+    git init --bare
+    git remote add origin https://github.com/mscamargo/dotfiles
+    cd ~
+    git --git-dir=$HOME/.local/src/dotfiles --work-tree=$HOME pull origin master
+}
+
 add_ppa ppa:regolith-linux/release
 
-update || error "Update process failed"
-
-# Installing packages
-cp "$packages_file" /tmp/packages.txt || wget "$packages_file" -O /tmp/packages.txt 
-while read package; do
-	install "$package"
-done < /tmp/packages.txt
-
+update
+install_packages
 install_sddm
+install_dots
 
 clear
+
+echo "All done!"

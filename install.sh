@@ -5,11 +5,13 @@
 
 packages_file="https://raw.githubusercontent.com/mscamargo/uarbs/master/packages.txt"
 
-error () { printf "%s\n" "$1" >&2; exit 1; }
-
 update () { clear; echo "Updating repositories..."; sudo apt update -y; }
 
 add_ppa () { clear; echo "Adding ppa $1..."; sudo add-apt-repository -y "$1"; }
+
+add_ppas () {
+    add_ppa ppa:regolith-linux/release
+}
 
 install () { clear; echo "Installing $1..."; sudo apt install -y "$1" ;}
 
@@ -42,8 +44,7 @@ install_dots () {
     rm README.md
 }
 
-add_ppa ppa:regolith-linux/release
-
+add_ppas
 update
 install_packages
 install_sddm

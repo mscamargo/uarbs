@@ -39,6 +39,11 @@ install_brave () {
     install brave-browser
 }
 
+install_discord () {
+    wget https://dl.discordapp.net/apps/linux/0.0.16/discord-0.0.16.deb -O /tmp/discord.deb
+    install /tmp/discord
+}
+
 install_dots () {
     clear
     echo "Installing dotfiles..."
@@ -57,6 +62,8 @@ update
 install_packages
 install_sddm
 install_dots
+install_brave
+install_discord
 
 clear
 

@@ -41,6 +41,7 @@ install_dots () {
     git remote add origin https://github.com/mscamargo/dots
     cd ~
     git --git-dir=$HOME/.local/src/dots --work-tree=$HOME pull origin master
+    git update-index --assume-unchanged "~/README.md"
     rm README.md
 }
 

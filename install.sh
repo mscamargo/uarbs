@@ -21,7 +21,7 @@ add_sources () {
     done < /tmp/sources.list
 }
 
-add_ppa () { clear; echo "Adding $1..."; sudo add-apt-repository -y "ppa:$1"; }
+add_ppa () { clear; echo "Adding ppa $1..."; sudo add-apt-repository -y "ppa:$1"; }
 
 add_ppas () {
     while read ppa; do
@@ -49,7 +49,7 @@ install_deb () { clear; echo "Installing $(basename $1)"; download "$1"; install
 
 install_debs () {
     while read deb; do
-        install "$deb"
+        install_deb "$deb"
     done < /tmp/debs.list
 }
 
@@ -71,7 +71,7 @@ install_dots () {
     mkdir -p ~/.local/src/dots
     cd ~/.local/src/dots
     git init --bare
-    git remote add origin https://github.com/mscamargo/dots
+    git remote add origin https://github.com/mscamargo/dots.git
     cd ~
     git --git-dir=$HOME/.local/src/dots --work-tree=$HOME pull origin master
     git update-index --assume-unchanged "~/README.md"

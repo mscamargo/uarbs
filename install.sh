@@ -40,8 +40,9 @@ install_brave () {
 }
 
 install_discord () {
+    clear
     wget https://dl.discordapp.net/apps/linux/0.0.16/discord-0.0.16.deb -O /tmp/discord.deb
-    install /tmp/discord
+    install /tmp/discord.deb
 }
 
 install_dots () {

@@ -75,6 +75,7 @@ install_dots () {
 download_installation_files
 
 # Add brave keys
+clear
 echo "Adding Brave Browser keys..."
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 
@@ -85,7 +86,5 @@ install_packages
 install_debs
 configure_sddm
 install_dots
-
-clear
 
 echo "All done!"

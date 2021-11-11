@@ -35,8 +35,14 @@ install () { clear; echo "Installing $1..."; sudo apt install -y "$1"; }
 
 install_packages () {
     while read package; do
-        install "$packages"
+        install "$package"
     done < /tmp/packages.list
+}
+
+install_required_dependencies () {
+    for package in curl git zsh ca-certificates apt-transport-https; do
+        install "$package"
+    done
 }
 
 install_deb () { clear; echo "Installing $(basename $1)"; download "$1"; install /tmp/$(basename $1); }
@@ -72,6 +78,7 @@ install_dots () {
     rm README.md
 }
 
+install_required_dependencies
 download_installation_files
 
 # Add brave keys

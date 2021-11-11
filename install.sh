@@ -3,7 +3,19 @@
 # by Marcos Camargo <mscamargo.dev@gmail.com>
 # License: GNU GPLv3
 
-packages_file="https://raw.githubusercontent.com/mscamargo/uarbs/master/packages.txt"
+packages="https://raw.githubusercontent.com/mscamargo/uarbs/master/packages.list"
+debs="https://raw.githubusercontent.com/mscamargo/uarbs/master/debs.list"
+ppas="https://raw.githubusercontent.com/mscamargo/uarbs/master/ppas.list"
+sources="https://raw.githubusercontent.com/mscamargo/uarbs/master/sources.list"
+
+download () {
+    wget "$1" -O /tmp/$(basename "$1") 
+}
+
+download https://raw.githubusercontent.com/mscamargo/uarbs/master/packages.list
+download https://raw.githubusercontent.com/mscamargo/uarbs/master/debs.list
+download https://raw.githubusercontent.com/mscamargo/uarbs/master/ppas.list
+download https://raw.githubusercontent.com/mscamargo/uarbs/master/sources.list
 
 update () { clear; echo "Updating repositories..."; sudo apt update -y; }
 
@@ -16,10 +28,10 @@ add_ppas () {
 install () { clear; echo "Installing $1..."; sudo apt install -y "$1" ;}
 
 install_packages () {
-    cp "$packages_file" /tmp/packages.txt || wget "$packages_file" -O /tmp/packages.txt
+    cp "$packages" /tmp/packages.list || wget "$packages" -O /tmp/packages.list
     while read package; do
-        install "$package"
-    done < /tmp/packages.txt
+        install "$packages"
+    done < /tmp/packages.list
 }
 
 install_sddm () {

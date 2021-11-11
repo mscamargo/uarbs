@@ -6,7 +6,7 @@
 download () { clear; echo "Downloading $1..."; wget "$1" -O /tmp/$(basename "$1"); }
 
 download_installation_files () {
-    base_url = "https://raw.githubusercontent.com/mscamargo/uarbs/master"
+    base_url="https://raw.githubusercontent.com/mscamargo/uarbs/master"
     download "$base_url/packages.list"
     download "$base_url/debs.list"
     download "$base_url/ppas.list"

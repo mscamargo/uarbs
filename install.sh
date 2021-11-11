@@ -45,6 +45,12 @@ install_discord () {
     install /tmp/discord.deb
 }
 
+install_zoom () {
+    clear
+    wget https://cdn.zoom.us/prod/5.8.3.145/zoom_amd64.deb -O /tmp/zoom.deb
+    install /tmp/zoom.deb
+}
+
 install_dots () {
     clear
     echo "Installing dotfiles..."
@@ -65,6 +71,7 @@ install_sddm
 install_dots
 install_brave
 install_discord
+install_zoom
 
 clear
 

@@ -68,12 +68,12 @@ configure_sddm () {
 install_dots () {
     clear
     echo "Installing dotfiles..."
-    mkdir -p ~/.local/src/dots
-    cd ~/.local/src/dots
+    mkdir -p ~/src/dots
+    cd ~/src/dots
     git init --bare
     git remote add origin https://github.com/mscamargo/dots.git
     cd ~
-    git --git-dir=$HOME/.local/src/dots --work-tree=$HOME pull origin master
+    git --git-dir=$HOME/src/dots --work-tree=$HOME pull origin master
     git update-index --assume-unchanged "~/README.md"
     rm README.md
 }

@@ -72,6 +72,7 @@ install_dots () {
     cd ~/src/dots
     git init --bare
     git remote add origin https://github.com/mscamargo/dots.git
+    git config --local status.showUntrackedFiles no
     cd ~
     git --git-dir=$HOME/src/dots --work-tree=$HOME pull origin master
     git --git-dir=$HOME/src/dots --work-tree=$HOME update-index --assume-unchanged "~/README.md"
@@ -93,5 +94,8 @@ install_packages
 install_debs
 configure_sddm
 install_dots
+
+echo "Setting ZSH as default shell"
+chsh -s $(which zsh)
 
 echo "All done!"

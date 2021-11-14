@@ -75,7 +75,7 @@ install_dots () {
     git config --local status.showUntrackedFiles no
     cd ~
     git --git-dir=$HOME/src/dots --work-tree=$HOME pull origin master
-    git --git-dir=$HOME/src/dots --work-tree=$HOME update-index --assume-unchanged "~/README.md"
+    git --git-dir=$HOME/src/dots --work-tree=$HOME update-index --assume-unchanged "$HOME/README.md"
     rm README.md
 }
 

@@ -97,6 +97,17 @@ install_alacritty () {
     cp extra/completions/_alacritty ${ZDOTDIR:-~}/.zsh_functions/_alacritty
 }
 
+install_polybar () {
+    git clone --recursive https://github.com/polybar/polybar /tmp/polybar
+    cd /tmp/polybar
+    mkdir build
+    cd build
+    cmake ..
+    make -j$(nproc)
+    # Optional. This will install the polybar executable in /usr/local/bin
+    sudo make install
+}
+
 install_required_dependencies
 download_installation_files
 
@@ -108,6 +119,7 @@ install_debs
 configure_sddm
 install_dots
 install_alacritty
+install_polybar
 
 echo "Setting ZSH as default shell"
 chsh -s $(which zsh)

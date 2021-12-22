@@ -120,6 +120,12 @@ install_docker () {
     sudo chmod +x /usr/local/bin/docker-compose
 }
 
+install_lazygit () {
+    download https://github.com/jesseduffield/lazygit/releases/download/v0.31.3/lazygit_0.31.3_Linux_x86_64.tar.gz
+    tar -xzf /tmp/lazygit_0.31.3_Linux_x86_64.tar.gz
+    mv /tmp/lazygit ~/.local/bin/lazygit
+}
+
 install_required_dependencies
 download_installation_files
 
@@ -134,6 +140,7 @@ install_dots
 install_alacritty
 install_polybar
 install_docker
+install_lazygit
 
 echo "Setting ZSH as default shell"
 chsh -s $(which zsh)

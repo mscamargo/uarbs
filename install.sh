@@ -13,6 +13,10 @@ download_installation_files () {
     download "$base_url/sources.list"
 }
 
+add_gpg_keys () {
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+}
+
 add_source () { clear; echo "Adding source..."; echo "$1" | sudo tee /etc/apt/sources.list.d/$2; }
 
 add_sources () {
@@ -108,9 +112,18 @@ install_polybar () {
     sudo make install
 }
 
+install_docker () {
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+}
+
 install_required_dependencies
 download_installation_files
 
+add_gpg_keys
 add_sources
 add_ppas
 update
@@ -120,6 +133,7 @@ configure_sddm
 install_dots
 install_alacritty
 install_polybar
+install_docker
 
 echo "Setting ZSH as default shell"
 chsh -s $(which zsh)

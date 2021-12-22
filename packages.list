@@ -35,3 +35,10 @@ libjsoncpp-dev
 libmpdclient-dev
 libcurl4-openssl-dev
 libnl-genl-3-dev
+ca-certificates
+curl
+gnupg
+lsb-release
+docker-ce
+docker-ce-cli
+containerd.io

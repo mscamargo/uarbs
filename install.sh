@@ -62,7 +62,7 @@ configure_sddm () {
     sudo mkdir -pv /usr/share/sddm/themes
     git clone https://github.com/RadRussianRus/sddm-slice.git /tmp/sddm-slice
     sudo cp -rv /tmp/sddm-slice /usr/share/sddm/themes/slice
-    sudo echo -e "[Theme]\nCurrent=slice" | sudo tee /etc/sddm.conf
+    sudo echo -e "[Theme]\nCurrent=slice\n\n[X11]\nSessionCommand=/urs/share/sddm/scripts/Xsession" | sudo tee /etc/sddm.conf
 }
 
 install_dots () {

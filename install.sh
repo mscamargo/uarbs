@@ -79,6 +79,24 @@ install_dots () {
     rm README.md
 }
 
+install_alacritty () {
+    git clone https://github.com/alacritty/alacritty.git /tmp/alacritty
+    cd /tmp/alacritty
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    source $HOME/.cargo/env
+    rustup override set stable
+    rustup update stable
+    cargo build --release
+    sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+    sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
+    sudo desktop-file-install extra/linux/Alacritty.desktop
+    sudo update-desktop-database
+    sudo mkdir -p /usr/local/share/man/man1
+    gzip -c extra/alacritty.man | sudo tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
+    gzip -c extra/alacritty-msg.man | sudo tee /usr/local/share/man/man1/alacritty-msg.1.gz > /dev/null
+    cp extra/completions/_alacritty ${ZDOTDIR:-~}/.zsh_functions/_alacritty
+}
+
 install_required_dependencies
 download_installation_files
 
@@ -89,6 +107,7 @@ install_packages
 install_debs
 configure_sddm
 install_dots
+install_alacritty
 
 echo "Setting ZSH as default shell"
 chsh -s $(which zsh)

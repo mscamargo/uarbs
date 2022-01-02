@@ -114,7 +114,7 @@ install_polybar () {
     sudo make install
 }
 
-install_docker () {
+configure_docker () {
     sudo groupadd docker
     sudo usermod -aG docker $USER
     newgrp docker
@@ -145,9 +145,9 @@ configure_sddm
 install_dots
 install_alacritty
 install_polybar
-install_docker
 install_lazygit
 install_pgcli
+configure_docker
 
 # install ueberzug required for preview images in ranger
 pip install ueberzug

@@ -11,6 +11,7 @@ download_installation_files () {
     download "$base_url/debs.list"
     download "$base_url/ppas.list"
     download "$base_url/sources.list"
+    download "$base_url/pips.list"
 }
 
 add_gpg_keys () {
@@ -43,6 +44,14 @@ install_packages () {
     while read package; do
         install "$package"
     done < /tmp/packages.list
+}
+
+install_pip () { clear; echo "Installing $1..."; pip install "$1"; }
+
+install_pips () {
+    while read package; do
+        install "$package"
+    done < /tmp/pips.list
 }
 
 install_required_dependencies () {
@@ -128,10 +137,6 @@ install_lazygit () {
     mv /tmp/lazygit ~/.local/bin/lazygit
 }
 
-install_pgcli () {
-    pip install pgcli
-}
-
 install_required_dependencies
 download_installation_files
 
@@ -141,16 +146,13 @@ add_ppas
 update
 install_packages
 install_debs
+install_pips
 configure_sddm
 install_dots
 install_alacritty
 install_polybar
 install_lazygit
-install_pgcli
 configure_docker
-
-# install ueberzug required for preview images in ranger
-pip install ueberzug
 
 echo "Setting ZSH as default shell"
 chsh -s $(which zsh)

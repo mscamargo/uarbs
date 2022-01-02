@@ -126,6 +126,23 @@ install_lazygit () {
     mv /tmp/lazygit ~/.local/bin/lazygit
 }
 
+install_github_cli () {
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+    sudo apt update
+    sudo apt install gh
+}
+
+install_pgcli () {
+    pip install pgcli
+}
+
+install_spotify () {
+    curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo apt-key add -
+    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    install spotify-client
+}
+
 install_required_dependencies
 download_installation_files
 
@@ -141,6 +158,12 @@ install_alacritty
 install_polybar
 install_docker
 install_lazygit
+install_github_cli
+install_pgcli
+install_spotify
+
+# install ueberzug required for preview images in ranger
+pip install ueberzug
 
 echo "Setting ZSH as default shell"
 chsh -s $(which zsh)

@@ -16,6 +16,7 @@ download_installation_files () {
 add_gpg_keys () {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+    curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo apt-key add -
 }
 
 add_source () { clear; echo "Adding source..."; echo "$1" | sudo tee /etc/apt/sources.list.d/$2; }
@@ -131,12 +132,6 @@ install_pgcli () {
     pip install pgcli
 }
 
-install_spotify () {
-    curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo apt-key add -
-    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-    install spotify-client
-}
-
 install_required_dependencies
 download_installation_files
 
@@ -153,7 +148,6 @@ install_polybar
 install_docker
 install_lazygit
 install_pgcli
-install_spotify
 
 # install ueberzug required for preview images in ranger
 pip install ueberzug

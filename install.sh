@@ -3,7 +3,7 @@
 # by Marcos Camargo <mscamargo.dev@gmail.com>
 # License: GNU GPLv3
 
-download () { clear; echo "Downloading $1..."; wget "$1" -O /tmp/$(basename "$1"); }
+download () { echo "Downloading $1..."; wget "$1" -O /tmp/$(basename "$1"); }
 
 download_installation_files () {
     base_url="https://raw.githubusercontent.com/mscamargo/uarbs/master"
@@ -20,7 +20,7 @@ add_gpg_keys () {
     curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo apt-key add -
 }
 
-add_source () { clear; echo "Adding source..."; echo "$1" | sudo tee /etc/apt/sources.list.d/$2; }
+add_source () { echo "adding source..."; echo "$1" | sudo tee /etc/apt/sources.list.d/$2; }
 
 add_sources () {
     while IFS=, read -r source file; do
@@ -28,7 +28,7 @@ add_sources () {
     done < /tmp/sources.list
 }
 
-add_ppa () { clear; echo "Adding ppa $1..."; sudo add-apt-repository -y "ppa:$1"; }
+add_ppa () { echo "Adding ppa $1..."; sudo add-apt-repository -y "ppa:$1"; }
 
 add_ppas () {
     while read ppa; do
@@ -36,9 +36,9 @@ add_ppas () {
     done < /tmp/ppas.list
 }
 
-update () { clear; echo "Updating repositories..."; sudo apt update -y; }
+update () { echo "Updating repositories..."; sudo apt update -y; }
 
-install () { clear; echo "Installing $1..."; sudo apt install -y "$1"; }
+install () { echo "Installing $1..."; sudo apt install -y "$1"; }
 
 install_packages () {
     while read package; do
@@ -46,7 +46,7 @@ install_packages () {
     done < /tmp/packages.list
 }
 
-install_pip () { clear; echo "Installing $1..."; pip install "$1"; }
+install_pip () { echo "Installing $1..."; pip install "$1"; }
 
 install_pips () {
     while read package; do
@@ -60,7 +60,7 @@ install_required_dependencies () {
     done
 }
 
-install_deb () { clear; echo "Installing $(basename $1)"; download "$1"; install /tmp/$(basename $1); }
+install_deb () { echo "Installing $(basename $1)"; download "$1"; install /tmp/$(basename $1); }
 
 install_debs () {
     while read deb; do
@@ -69,7 +69,6 @@ install_debs () {
 }
 
 configure_sddm () {
-    clear
     echo "Enabling SDDM..."
     sudo systemctl enable sddm
     clear
@@ -81,7 +80,6 @@ configure_sddm () {
 }
 
 install_dots () {
-    clear
     echo "Installing dotfiles..."
     mkdir -p ~/src/dots
     cd ~/src/dots
@@ -133,6 +131,7 @@ configure_docker () {
 
 install_lazygit () {
     download https://github.com/jesseduffield/lazygit/releases/download/v0.31.3/lazygit_0.31.3_Linux_x86_64.tar.gz
+    cd /tmp
     tar -xzf /tmp/lazygit_0.31.3_Linux_x86_64.tar.gz
     mv /tmp/lazygit ~/.local/bin/lazygit
 }

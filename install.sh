@@ -15,6 +15,7 @@ download_installation_files () {
 
 add_gpg_keys () {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
 }
 
 add_source () { clear; echo "Adding source..."; echo "$1" | sudo tee /etc/apt/sources.list.d/$2; }
@@ -126,13 +127,6 @@ install_lazygit () {
     mv /tmp/lazygit ~/.local/bin/lazygit
 }
 
-install_github_cli () {
-    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-    sudo apt update
-    sudo apt install gh
-}
-
 install_pgcli () {
     pip install pgcli
 }
@@ -158,7 +152,6 @@ install_alacritty
 install_polybar
 install_docker
 install_lazygit
-install_github_cli
 install_pgcli
 install_spotify
 
